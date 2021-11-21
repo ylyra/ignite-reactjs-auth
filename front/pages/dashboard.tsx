@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
+
 import { useAuth } from "../contexts/AuthContext";
+import { setupAPIClient } from "../services/api";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
 const Dashboard: NextPage = () => {
@@ -12,9 +14,13 @@ const Dashboard: NextPage = () => {
   );
 };
 
-export const getServerSideProps = withSSRAuth(async () => {
+export const getServerSideProps = withSSRAuth(async (ctx) => {
+  const apiClient = setupAPIClient(ctx);
+  const response = await apiClient.get("/me");
   return {
-    props: {},
+    props: {
+      user: response.data,
+    },
   };
 });
 
