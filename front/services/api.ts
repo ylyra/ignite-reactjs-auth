@@ -25,7 +25,7 @@ api.interceptors.response.use(
         // will renew user token
         cookies = parseCookies();
 
-        const { "@NextAuthTest:refreshTokentoken": refreshToken } = cookies;
+        const { "@NextAuthTest:refreshToken": refreshToken } = cookies;
         const originalConfig = errorResponse.config;
 
         if (!isRefreshing) {
