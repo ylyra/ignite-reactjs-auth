@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { useAuth } from "../contexts/AuhtContext";
+import { useAuth } from "../contexts/AuthContext";
 
 import styles from "../styles/Home.module.css";
 
