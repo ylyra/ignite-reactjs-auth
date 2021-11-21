@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
+import { Can } from "../components/Can";
 
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import { setupAPIClient } from "../services/api";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
@@ -10,6 +11,10 @@ const Dashboard: NextPage = () => {
   return (
     <>
       <h1>Dashboard: {user?.email}</h1>
+
+      <Can permissions={["metrics.list"]}>
+        <div>Métricas</div>
+      </Can>
     </>
   );
 };

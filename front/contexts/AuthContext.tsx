@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import Router from "next/router";
 import { destroyCookie, setCookie, parseCookies } from "nookies";
 import { api } from "../services/apiClient";
@@ -95,9 +89,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
     user,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const auth = useContext(AuthContext);
-  return auth;
 }

@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 
 import styles from "../styles/Home.module.css";
 import { withSSRGuest } from "../utils/withSSRGuest";
