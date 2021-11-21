@@ -24,9 +24,14 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
+let authChannel: BroadcastChannel;
+
 export function signOut() {
   destroyCookie(undefined, "@NextAuthTest:token");
   destroyCookie(undefined, "@NextAuthTest:refreshToken");
+
+  authChannel.postMessage("signOut");
+
   Router.push("/");
 }
 
@@ -49,6 +54,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     }
     loadUserData();
+  }, []);
+
+  useEffect(() => {
+    authChannel = new BroadcastChannel("auth");
+
+    authChannel.onmessage = (message) => {
+      switch (message.data) {
+        case "signOut":
+          signOut();
+          break;
+        case "signIn":
+          Router.push("/dashboard");
+          break;
+        default:
+          break;
+      }
+    };
+
+    return () => {
+      authChannel.close();
+    };
   }, []);
 
   async function signIn({ email, password }: SignInCredentials): Promise<void> {
@@ -76,6 +102,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      authChannel.postMessage("signIn");
 
       Router.push("/dashboard");
     } catch (err) {
